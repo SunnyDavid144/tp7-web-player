@@ -410,6 +410,30 @@ export function useTapeMotor(): TapeMotorAPI {
     } catch { setState(prev => ({ ...prev, error: 'Failed to decode audio.' })); }
   }, [ensureContext, disconnectSource, stopLoop, startLoop]);
 
+  // --- Load Demo Track ---
+  const loadDemoTrack = useCallback(async (): Promise<void> => {
+    try {
+      const res = await fetch('/demo.mp3');
+      if (!res.ok) return;
+      const arrayBuffer = await res.arrayBuffer();
+      const ctx = await ensureContext();
+      const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+      const waveformData = extractWaveform(audioBuffer);
+      const trackId = `demo-${Date.now()}`;
+      const fileName = 'Demo Track';
+      const newTrack = { id: trackId, fileName, duration: audioBuffer.duration, waveformData };
+      trackBuffersRef.current.push(audioBuffer);
+      const newIndex = trackBuffersRef.current.length - 1;
+      refs.current.audioBuffer = audioBuffer; refs.current.startOffset = 0; refs.current.sourceNode = null;
+      setState(prev => ({
+        ...prev, isLoaded: true, isPlaying: false, fileName, duration: audioBuffer.duration,
+        currentTime: 0, rotationDeg: 0, playbackRate: 1.0, waveformData, progress: 0, error: null,
+        tracks: [...prev.tracks, newTrack], activeTrackIndex: newIndex,
+      }));
+      startLoop();
+    } catch { /* Demo track not available — silent fail */ }
+  }, [ensureContext, startLoop]);
+
   // --- Tape Stop ---
   const onTapeStopStart = useCallback(() => {
     const s = stateRef.current;
@@ -705,6 +729,6 @@ export function useTapeMotor(): TapeMotorAPI {
     onScratchStart, onScratchMove, onScratchEnd, onTapeStopStart, onTapeStopEnd,
     onRockerPress, onRockerRelease, volumeUp, volumeDown, setVolume,
     cycleDisplayMode, toggleLoop, toggleTapeEffects, toggleDarkMode, skipForward, skipBackward,
-    selectTrack, removeTrack, nextTrack, prevTrack, loadFromBuffer,
+    selectTrack, removeTrack, nextTrack, prevTrack, loadFromBuffer, loadDemoTrack,
   };
 }

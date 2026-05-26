@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { useTapeMotor } from '../hooks/useTapeMotor';
 import { ReelSVG } from './ReelSVG';
 import { TransportControls } from './TransportControls';
@@ -7,6 +7,7 @@ import { SideRocker } from './SideRocker';
 import { IOPorts } from './IOPorts';
 import { TrackList } from './TrackList';
 import { SoundCloudSearch } from './SoundCloudSearch';
+import { ScreenRecorder } from './ScreenRecorder';
 import { Point } from '../types';
 
 export function TP7Player() {
@@ -14,6 +15,11 @@ export function TP7Player() {
   const reelRef = useRef<SVGSVGElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
+
+  // Auto-load demo track on first mount
+  useEffect(() => {
+    motor.loadDemoTrack();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getReelCenter = useCallback((): Point => {
     if (!reelRef.current) return { x: 0, y: 0 };
@@ -133,6 +139,9 @@ export function TP7Player() {
         onTrackLoaded={(buffer, name) => motor.loadFromBuffer(buffer, name)}
         darkMode={motor.state.darkMode}
       />
+
+      {/* Screen Recorder */}
+      <ScreenRecorder darkMode={motor.state.darkMode} />
     </div>
   );
 }

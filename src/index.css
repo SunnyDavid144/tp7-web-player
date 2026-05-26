@@ -819,3 +819,112 @@ body {
   .oled-screen { min-width: 100px; padding: 6px 8px; }
   .tp7-model { font-size: 12px; }
 }
+
+/* === Screenshot Page === */
+.screenshot-page {
+  width: 1200px;
+  height: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #ebebeb 100%);
+  overflow: hidden;
+}
+
+.screenshot-page .tp7-device {
+  transform: scale(1.15);
+}
+
+/* === Screen Recorder === */
+.screen-rec-btn {
+  width: 370px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(1.2);
+  border-radius: var(--radius-lg);
+  border: 0.5px solid var(--alu-400);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  color: var(--alu-700);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  letter-spacing: 0.2px;
+  transition: all 0.15s var(--ease-out);
+}
+
+.screen-rec-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--alu-500);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.screen-rec-btn.active {
+  background: rgba(255, 59, 48, 0.06);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.screen-rec-btn.active:hover {
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.screen-rec-btn.dark {
+  background: rgba(25, 25, 25, 0.9);
+  border-color: #3a3a3a;
+  color: #888;
+}
+
+.screen-rec-btn.dark:hover {
+  background: rgba(35, 35, 35, 0.95);
+  border-color: #555;
+  color: #aaa;
+}
+
+.screen-rec-btn.dark.active {
+  background: rgba(255, 59, 48, 0.08);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.screen-rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.screen-rec-dot.recording {
+  animation: pulse-rec 1.2s ease-in-out infinite;
+}
+
+/* Countdown overlay */
+.screen-rec-countdown {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+}
+
+.screen-rec-countdown span {
+  font-size: 120px;
+  font-weight: 200;
+  color: white;
+  font-family: var(--font-sans);
+  animation: countdown-pop 1s var(--ease-spring);
+}
+
+@keyframes countdown-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
+}

@@ -130,6 +130,7 @@ export interface TapeMotorAPI {
   nextTrack(): void;
   prevTrack(): void;
   loadFromBuffer(buffer: ArrayBuffer, fileName: string): Promise<void>;
+  loadDemoTrack(): Promise<void>;
 }
 
 export const INITIAL_STATE: TapeMotorState = {
