@@ -106,15 +106,17 @@ body {
 .tp7-chassis {
   position: relative;
   width: 370px;
+  /* Taller aspect ratio like the real device */
+  min-height: 520px;
   background:
     linear-gradient(168deg,
-      var(--alu-50) 0%,
-      var(--alu-200) 12%,
-      var(--alu-300) 35%,
-      var(--alu-400) 60%,
-      var(--alu-300) 80%,
-      var(--alu-200) 95%,
-      var(--alu-100) 100%
+      #d8d8d8 0%,
+      #d0d0d0 15%,
+      #c8c8c8 40%,
+      #c4c4c4 60%,
+      #c8c8c8 80%,
+      #d0d0d0 95%,
+      #d4d4d4 100%
     );
   border-radius: var(--radius-xl);
   border: 0.5px solid var(--alu-500);
@@ -167,6 +169,21 @@ body {
   letter-spacing: 0.8px;
   color: var(--alu-700);
   font-family: var(--font-sans);
+}
+
+.tp7-upper-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tp7-mic-hole {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #999;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  margin-left: 2px;
 }
 
 /* === OLED Display === */
@@ -253,9 +270,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0 16px;
+  padding: 4px 0 8px;
   position: relative;
   z-index: 2;
+  flex: 1;
 }
 
 .reel-container { position: relative; display: flex; align-items: center; justify-content: center; }
@@ -270,14 +288,19 @@ body {
 .reel-svg:active, .reel-svg.scratching { cursor: grabbing; filter: brightness(0.98) contrast(1.02); }
 .reel-svg.tape-stopped { filter: brightness(0.95) saturate(0.85); }
 
-/* === Lower Section — Transport === */
+/* === Lower Section — Transport (separate raised panel) === */
 .tp7-lower {
-  background: linear-gradient(180deg, var(--alu-300) 0%, var(--alu-400) 50%, var(--alu-300) 100%);
-  border-top: 0.5px solid var(--alu-500);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  background: linear-gradient(180deg, #d0d0d0 0%, #c8c8c8 30%, #c4c4c4 70%, #c8c8c8 100%);
+  border-top: none;
+  margin-top: 4px;
+  box-shadow:
+    0 -2px 0 rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
   padding: 14px 16px 16px;
   position: relative;
   z-index: 2;
+  /* Visible seam/gap from main body */
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .transport-controls { display: flex; gap: 5px; align-items: stretch; }
@@ -370,6 +393,16 @@ body {
 
 .rocker-label { font-size: 6px; color: var(--alu-600); margin-top: 6px; letter-spacing: 0.5px; font-weight: 500; }
 
+.rocker-pivot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--alu-300) 0%, var(--alu-500) 100%);
+  border: 0.5px solid var(--alu-600);
+  box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.4), 0 1px 2px rgba(0,0,0,0.1);
+  margin-top: 8px;
+}
+
 /* === Right Side === */
 .io-ports {
   display: flex; flex-direction: column; align-items: center;
@@ -400,14 +433,14 @@ body {
 
 .active-btn { box-shadow: 0 0 0 2px var(--accent), 0 2px 6px rgba(242,101,34,0.25) !important; }
 
-.knurled-dial { width: 30px; height: 40px; margin-top: 100px; display: flex; align-items: center; justify-content: center; cursor: default; }
+.knurled-dial { width: 36px; height: 48px; margin-top: 80px; display: flex; align-items: center; justify-content: center; cursor: default; }
 .knurled-dial.interactive { cursor: ns-resize; }
 
 .dial-knurl {
-  width: 26px; height: 36px; border-radius: var(--radius-sm);
+  width: 32px; height: 44px; border-radius: 5px;
   background: repeating-linear-gradient(90deg, var(--alu-500) 0px, var(--alu-400) 1px, var(--alu-300) 2px, var(--alu-400) 3px);
   border: 0.5px solid var(--alu-600);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.12), inset 0 0.5px 0 rgba(255,255,255,0.2), inset 0 -0.5px 0 rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 0.5px 0 rgba(255,255,255,0.2), inset 0 -0.5px 0 rgba(0,0,0,0.08);
   position: relative; overflow: hidden;
 }
 

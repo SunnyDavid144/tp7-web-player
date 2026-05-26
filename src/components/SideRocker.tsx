@@ -43,6 +43,9 @@ export function SideRocker({ isLoaded, rockerSpeed, onRockerPress, onRockerRelea
 
       {/* R▼ label */}
       <span className="rocker-label">R▼</span>
+
+      {/* Pivot screw */}
+      <div className="rocker-pivot" />
     </div>
   );
 }

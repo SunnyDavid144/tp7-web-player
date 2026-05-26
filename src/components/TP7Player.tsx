@@ -60,7 +60,10 @@ export function TP7Player() {
           onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
 
           <div className="tp7-upper">
-            <span className="tp7-model">TP-7</span>
+            <div className="tp7-upper-left">
+              <span className="tp7-model">TP-7</span>
+              <div className="tp7-mic-hole" />
+            </div>
             <DisplayPanel currentTime={motor.state.currentTime} duration={motor.state.duration}
               playbackRate={motor.state.playbackRate} fileName={motor.state.fileName}
               isLoaded={motor.state.isLoaded} error={motor.state.error}
