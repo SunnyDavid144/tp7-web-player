@@ -221,15 +221,17 @@ export function useTapeMotor(): TapeMotorAPI {
   }, [buildAudioChain]);
 
   // --- Transport ---
-  const play = useCallback(() => {
+  const play = useCallback(async () => {
     const s = stateRef.current;
     if (s.isRecording || !s.isLoaded || s.isPlaying || s.isScratchActive) return;
-    if (!refs.current.audioBuffer || !refs.current.audioContext) return;
+    if (!refs.current.audioBuffer) return;
+    // Ensure AudioContext exists (first user gesture creates it)
+    await ensureContext();
     momentumRef.current = 0;
     createAndStartSource(refs.current.startOffset, 1.0);
     setState(prev => ({ ...prev, isPlaying: true, playbackRate: 1.0, error: null }));
     startLoop();
-  }, [createAndStartSource, startLoop]);
+  }, [ensureContext, createAndStartSource, startLoop]);
 
   const pause = useCallback(() => {
     const s = stateRef.current;
@@ -416,8 +418,11 @@ export function useTapeMotor(): TapeMotorAPI {
       const res = await fetch('/demo.mp3');
       if (!res.ok) return;
       const arrayBuffer = await res.arrayBuffer();
-      const ctx = await ensureContext();
-      const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+
+      // Use OfflineAudioContext for decoding — doesn't require user gesture
+      const tempCtx = new OfflineAudioContext(2, 1, 44100);
+      const audioBuffer = await tempCtx.decodeAudioData(arrayBuffer);
+
       const waveformData = extractWaveform(audioBuffer);
       const trackId = `demo-${Date.now()}`;
       const fileName = 'Demo Track';
@@ -432,7 +437,7 @@ export function useTapeMotor(): TapeMotorAPI {
       }));
       startLoop();
     } catch { /* Demo track not available — silent fail */ }
-  }, [ensureContext, startLoop]);
+  }, [startLoop]);
 
   // --- Tape Stop ---
   const onTapeStopStart = useCallback(() => {

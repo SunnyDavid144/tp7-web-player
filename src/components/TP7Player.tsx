@@ -6,8 +6,6 @@ import { DisplayPanel } from './DisplayPanel';
 import { SideRocker } from './SideRocker';
 import { IOPorts } from './IOPorts';
 import { TrackList } from './TrackList';
-import { SoundCloudSearch } from './SoundCloudSearch';
-import { ScreenRecorder } from './ScreenRecorder';
 import { Point } from '../types';
 
 export function TP7Player() {
@@ -17,8 +15,12 @@ export function TP7Player() {
   const [isDragOver, setIsDragOver] = useState(false);
 
   // Auto-load demo track on first mount
+  const demoLoadedRef = useRef(false);
   useEffect(() => {
-    motor.loadDemoTrack();
+    if (!demoLoadedRef.current) {
+      demoLoadedRef.current = true;
+      motor.loadDemoTrack();
+    }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getReelCenter = useCallback((): Point => {
@@ -31,7 +33,6 @@ export function TP7Player() {
   const handleDragLeave = useCallback((e: React.DragEvent) => { e.preventDefault(); e.stopPropagation(); setIsDragOver(false); }, []);
   const handleDrop = useCallback(async (e: React.DragEvent) => {
     e.preventDefault(); e.stopPropagation(); setIsDragOver(false);
-    // Support dropping multiple files
     const files = Array.from(e.dataTransfer.files);
     for (const file of files) {
       if (file.type.startsWith('audio/')) {
@@ -52,7 +53,6 @@ export function TP7Player() {
         await motor.loadFile(file);
       }
     }
-    // Reset input so the same file can be selected again
     if (fileInputRef.current) fileInputRef.current.value = '';
   }, [motor]);
 
@@ -109,7 +109,7 @@ export function TP7Player() {
           darkMode={motor.state.darkMode} />
       </div>
 
-      {/* Track List — below the device */}
+      {/* Track List */}
       <TrackList
         tracks={motor.state.tracks}
         activeTrackIndex={motor.state.activeTrackIndex}
@@ -118,30 +118,21 @@ export function TP7Player() {
         isPlaying={motor.state.isPlaying}
       />
 
-      {/* Add Media Button */}
+      {/* Add Media */}
       <button className="add-media-btn" onClick={() => fileInputRef.current?.click()}>
         <svg viewBox="0 0 20 20" width="16" height="16">
           <path d="M10 3v14M3 10h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
         <span>Add Audio Files</span>
       </button>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="audio/*"
-        multiple
-        onChange={handleFileSelect}
-        style={{ display: 'none' }}
-      />
+      <input ref={fileInputRef} type="file" accept="audio/*" multiple onChange={handleFileSelect} style={{ display: 'none' }} />
 
-      {/* SoundCloud Search */}
-      <SoundCloudSearch
-        onTrackLoaded={(buffer, name) => motor.loadFromBuffer(buffer, name)}
-        darkMode={motor.state.darkMode}
-      />
-
-      {/* Screen Recorder */}
-      <ScreenRecorder darkMode={motor.state.darkMode} />
+      {/* SoundCloud — greyed out / coming soon */}
+      <div className="sc-coming-soon">
+        <span className="sc-logo">☁</span>
+        <span>SoundCloud</span>
+        <span className="sc-soon-badge">Coming Soon</span>
+      </div>
     </div>
   );
 }

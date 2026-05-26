@@ -683,111 +683,52 @@ body {
   background: rgba(242, 101, 34, 0.05);
 }
 
-/* === SoundCloud Panel === */
-.sc-panel {
+/* === SoundCloud Panel (Coming Soon) === */
+.sc-coming-soon {
   width: 370px;
-  background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(16px) saturate(1.2);
-  border-radius: var(--radius-lg); border: 0.5px solid var(--alu-400);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.03);
-  overflow: hidden;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  border: 0.5px solid var(--alu-400);
+  opacity: 0.5;
+  cursor: default;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--alu-600);
+  letter-spacing: 0.2px;
 }
 
-.sc-panel.dark { background: rgba(25, 25, 25, 0.9); border-color: #222; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-
-.sc-toggle {
-  width: 100%; padding: 11px 14px; background: none; border: none;
-  display: flex; align-items: center; gap: 8px;
-  cursor: pointer; font-size: 11px; font-weight: 600; color: #555; letter-spacing: 0.2px;
-  transition: background 0.12s ease;
+.dark-mode .sc-coming-soon {
+  background: rgba(25, 25, 25, 0.6);
+  border-color: #333;
+  color: #555;
 }
 
-.sc-panel.dark .sc-toggle { color: #999; }
-.sc-toggle:hover { background: rgba(0, 0, 0, 0.025); }
-.sc-panel.dark .sc-toggle:hover { background: rgba(255, 255, 255, 0.025); }
-.sc-logo { font-size: 16px; color: #f50; }
+.sc-coming-soon .sc-logo { font-size: 16px; color: var(--alu-500); }
+.dark-mode .sc-coming-soon .sc-logo { color: #444; }
 
-.sc-badge {
-  margin-left: auto; font-size: 9px; font-weight: 600;
-  background: var(--alu-200); padding: 2px 7px; border-radius: 10px; color: var(--alu-600);
+.sc-soon-badge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--alu-500);
+  background: var(--alu-200);
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
 }
 
-.sc-panel.dark .sc-badge { background: #333; color: #888; }
-
-.sc-body { padding: 0 12px 14px; display: flex; flex-direction: column; gap: 10px; }
-
-.sc-search-bar { display: flex; gap: 6px; }
-
-.sc-input {
-  flex: 1; padding: 8px 12px;
-  border: 0.5px solid var(--alu-400); border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.85); font-size: 11px; outline: none; font-family: inherit;
-  transition: all 0.15s ease;
-}
-
-.sc-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(242, 101, 34, 0.08); }
-.sc-panel.dark .sc-input { background: rgba(50, 50, 50, 0.85); border-color: #3a3a3a; color: #eee; }
-.sc-panel.dark .sc-input:focus { border-color: var(--accent); }
-
-.sc-search-btn {
-  padding: 8px 14px; border: 0.5px solid var(--alu-400); border-radius: var(--radius-md);
-  background: var(--alu-200); cursor: pointer; font-size: 14px; color: #555;
-  transition: all 0.1s ease;
-}
-
-.sc-search-btn:hover { background: var(--alu-100); transform: scale(1.02); }
-.sc-search-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
-.sc-panel.dark .sc-search-btn { background: #3a3a3a; border-color: #444; color: #ccc; }
-
-.sc-error { font-size: 10px; color: var(--red); padding: 2px 0; }
-
-.sc-results { max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
-
-.sc-track {
-  display: flex; align-items: center; gap: 10px;
-  padding: 7px 8px; border-radius: var(--radius-md);
-  cursor: pointer; transition: all 0.1s var(--ease-smooth);
-}
-
-.sc-track:hover { background: rgba(0, 0, 0, 0.035); transform: translateX(2px); }
-.sc-panel.dark .sc-track:hover { background: rgba(255, 255, 255, 0.035); }
-
-.sc-track-art {
-  width: 36px; height: 36px; border-radius: 5px; overflow: hidden; flex-shrink: 0;
-  background: var(--alu-200); box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-.sc-panel.dark .sc-track-art { background: #2a2a2a; }
-.sc-track-art img { width: 100%; height: 100%; object-fit: cover; }
-.sc-track-art-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--alu-500); }
-
-.sc-track-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.sc-track-title { font-size: 11px; font-weight: 500; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sc-panel.dark .sc-track-title { color: #ddd; }
-.sc-track-artist { font-size: 9px; color: var(--alu-600); }
-.sc-panel.dark .sc-track-artist { color: #666; }
-.sc-track-duration { font-size: 9px; color: var(--alu-600); font-family: var(--font-mono); flex-shrink: 0; }
-
-.sc-loading { font-size: 12px; animation: spin 0.8s linear infinite; color: var(--accent); }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.sc-setup { font-size: 10px; color: #666; line-height: 1.7; }
-.sc-setup code { display: block; background: var(--alu-200); padding: 8px 12px; border-radius: var(--radius-md); margin: 8px 0; font-size: 10px; font-family: var(--font-mono); }
-.sc-panel.dark .sc-setup { color: #999; }
-.sc-panel.dark .sc-setup code { background: #2a2a2a; color: #ddd; }
-.sc-hint { font-size: 9px; color: #999; margin-top: 4px; }
+.dark-mode .sc-soon-badge { background: #333; color: #666; }
 
 /* === Scrollbar Styling === */
-.track-list::-webkit-scrollbar,
-.sc-results::-webkit-scrollbar { width: 4px; }
-
-.track-list::-webkit-scrollbar-track,
-.sc-results::-webkit-scrollbar-track { background: transparent; }
-
-.track-list::-webkit-scrollbar-thumb,
-.sc-results::-webkit-scrollbar-thumb { background: var(--alu-400); border-radius: 2px; }
-
-.dark-mode .track-list::-webkit-scrollbar-thumb,
-.dark-mode .sc-results::-webkit-scrollbar-thumb { background: #444; }
+.track-list::-webkit-scrollbar { width: 4px; }
+.track-list::-webkit-scrollbar-track { background: transparent; }
+.track-list::-webkit-scrollbar-thumb { background: var(--alu-400); border-radius: 2px; }
+.dark-mode .track-list::-webkit-scrollbar-thumb { background: #444; }
 
 /* === Selection === */
 ::selection { background: rgba(242, 101, 34, 0.15); color: inherit; }
@@ -807,7 +748,7 @@ body {
 
   .transport-btn { height: 48px; }
 
-  .track-list, .sc-panel, .add-media-btn { width: 100%; max-width: 370px; }
+  .track-list, .add-media-btn, .sc-coming-soon { width: 100%; max-width: 370px; }
 
   .tp7-upper { padding: 14px 16px 8px; }
   .tp7-lower { padding: 12px 12px 14px; }
@@ -835,96 +776,3 @@ body {
   transform: scale(1.15);
 }
 
-/* === Screen Recorder === */
-.screen-rec-btn {
-  width: 370px;
-  padding: 11px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(16px) saturate(1.2);
-  border-radius: var(--radius-lg);
-  border: 0.5px solid var(--alu-400);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  color: var(--alu-700);
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--font-sans);
-  letter-spacing: 0.2px;
-  transition: all 0.15s var(--ease-out);
-}
-
-.screen-rec-btn:hover {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: var(--alu-500);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.screen-rec-btn.active {
-  background: rgba(255, 59, 48, 0.06);
-  border-color: var(--red);
-  color: var(--red);
-}
-
-.screen-rec-btn.active:hover {
-  background: rgba(255, 59, 48, 0.1);
-}
-
-.screen-rec-btn.dark {
-  background: rgba(25, 25, 25, 0.9);
-  border-color: #3a3a3a;
-  color: #888;
-}
-
-.screen-rec-btn.dark:hover {
-  background: rgba(35, 35, 35, 0.95);
-  border-color: #555;
-  color: #aaa;
-}
-
-.screen-rec-btn.dark.active {
-  background: rgba(255, 59, 48, 0.08);
-  border-color: var(--red);
-  color: var(--red);
-}
-
-.screen-rec-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--red);
-}
-
-.screen-rec-dot.recording {
-  animation: pulse-rec 1.2s ease-in-out infinite;
-}
-
-/* Countdown overlay */
-.screen-rec-countdown {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  z-index: 9999;
-}
-
-.screen-rec-countdown span {
-  font-size: 120px;
-  font-weight: 200;
-  color: white;
-  font-family: var(--font-sans);
-  animation: countdown-pop 1s var(--ease-spring);
-}
-
-@keyframes countdown-pop {
-  0% { transform: scale(0.5); opacity: 0; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.9; }
-}
