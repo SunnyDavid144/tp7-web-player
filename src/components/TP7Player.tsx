@@ -6,6 +6,7 @@ import { DisplayPanel } from './DisplayPanel';
 import { SideRocker } from './SideRocker';
 import { IOPorts } from './IOPorts';
 import { TrackList } from './TrackList';
+import { FeatureGuide } from './FeatureGuide';
 import { Point } from '../types';
 
 export function TP7Player() {
@@ -13,6 +14,7 @@ export function TP7Player() {
   const reelRef = useRef<SVGSVGElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
 
   // Auto-load demo track on first mount
   const demoLoadedRef = useRef(false);
@@ -56,8 +58,11 @@ export function TP7Player() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   }, [motor]);
 
+  const dismissGuide = useCallback(() => { setShowGuide(false); }, []);
+
   return (
-    <div className={`tp7-wrapper ${motor.state.darkMode ? 'dark-mode' : ''}`}>
+    <div className={`tp7-wrapper ${motor.state.darkMode ? 'dark-mode' : ''}`} onClick={showGuide ? dismissGuide : undefined}>
+      <FeatureGuide visible={showGuide} />
       <div className="tp7-device">
         <SideRocker isLoaded={motor.state.isLoaded} rockerSpeed={motor.state.rockerSpeed}
           onRockerPress={(dir) => motor.onRockerPress(dir)} onRockerRelease={() => motor.onRockerRelease()} />
