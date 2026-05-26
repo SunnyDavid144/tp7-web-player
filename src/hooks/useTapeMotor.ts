@@ -332,6 +332,8 @@ export function useTapeMotor(): TapeMotorAPI {
   const exportRecording = useCallback(() => {
     const buffer = refs.current.audioBuffer;
     if (!buffer) return;
+    // Don't allow exporting the demo track
+    if (stateRef.current.fileName === 'Demo Track') return;
     // Convert AudioBuffer to WAV
     const numChannels = buffer.numberOfChannels;
     const sampleRate = buffer.sampleRate;
