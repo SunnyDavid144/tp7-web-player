@@ -779,6 +779,10 @@ body {
 
 
 /* === Feature Guide Overlay === */
+.tp7-device-wrap {
+  position: relative;
+}
+
 .feature-guide {
   position: absolute;
   inset: 0;
@@ -836,19 +840,19 @@ body {
   flex-shrink: 0;
 }
 
-/* Positions — relative to the tp7-wrapper */
-.guide-oled { top: 28px; right: -80px; flex-direction: row-reverse; }
-.guide-reel { top: 60px; left: 50%; transform: translateX(60%); flex-direction: column; align-items: flex-start; }
-.guide-rocker { top: 50%; left: -110px; transform: translateY(-50%); }
-.guide-transport { bottom: 140px; left: 50%; transform: translateX(-50%); flex-direction: column; align-items: center; }
-.guide-dial { bottom: 180px; right: -90px; flex-direction: row-reverse; }
-.guide-mbtn { top: 50px; right: -70px; flex-direction: row-reverse; }
-.guide-fx { top: 90px; right: -75px; flex-direction: row-reverse; }
-.guide-keyboard { bottom: 80px; left: 50%; transform: translateX(-50%); }
+/* Positions — anchored to the device */
+.guide-oled { top: 20px; right: -120px; }
+.guide-reel { top: 100px; left: 50%; transform: translateX(-50%); flex-direction: column; align-items: center; }
+.guide-rocker { top: 45%; left: -130px; }
+.guide-transport { bottom: 10px; left: 50%; transform: translateX(-50%); flex-direction: column; align-items: center; }
+.guide-dial { bottom: 60px; right: -100px; }
+.guide-mbtn { top: 30px; right: -90px; }
+.guide-fx { top: 80px; right: -95px; }
+.guide-keyboard { bottom: -30px; left: 50%; transform: translateX(-50%); }
 
 .guide-dismiss {
   position: absolute;
-  bottom: 40px;
+  bottom: -55px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;

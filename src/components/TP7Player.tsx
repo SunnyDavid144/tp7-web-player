@@ -62,8 +62,9 @@ export function TP7Player() {
 
   return (
     <div className={`tp7-wrapper ${motor.state.darkMode ? 'dark-mode' : ''}`} onClick={showGuide ? dismissGuide : undefined}>
-      <FeatureGuide visible={showGuide} />
-      <div className="tp7-device">
+      <div className="tp7-device-wrap">
+        <FeatureGuide visible={showGuide} />
+        <div className="tp7-device">
         <SideRocker isLoaded={motor.state.isLoaded} rockerSpeed={motor.state.rockerSpeed}
           onRockerPress={(dir) => motor.onRockerPress(dir)} onRockerRelease={() => motor.onRockerRelease()} />
 
@@ -112,6 +113,7 @@ export function TP7Player() {
           onToggleDarkMode={() => motor.toggleDarkMode()} onToggleTapeEffects={() => motor.toggleTapeEffects()}
           onExport={() => motor.exportRecording()} tapeEffects={motor.state.tapeEffectsEnabled}
           darkMode={motor.state.darkMode} />
+      </div>
       </div>
 
       {/* Track List */}
