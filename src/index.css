@@ -785,74 +785,138 @@ body {
 
 .feature-guide {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
   z-index: 100;
-  animation: guide-fade-in 0.8s var(--ease-out) both;
+  overflow: visible;
+  animation: guide-fade-in 0.6s var(--ease-out) both;
 }
 
 @keyframes guide-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .guide-label {
   position: absolute;
   display: flex;
   align-items: center;
-  gap: 4px;
-  animation: guide-label-in 0.6s var(--ease-out) both;
+  gap: 6px;
+  opacity: 0;
+  animation: guide-label-in 0.5s var(--ease-out) forwards;
 }
 
-.guide-label:nth-child(1) { animation-delay: 0.2s; }
-.guide-label:nth-child(2) { animation-delay: 0.35s; }
-.guide-label:nth-child(3) { animation-delay: 0.5s; }
-.guide-label:nth-child(4) { animation-delay: 0.65s; }
-.guide-label:nth-child(5) { animation-delay: 0.8s; }
-.guide-label:nth-child(6) { animation-delay: 0.95s; }
-.guide-label:nth-child(7) { animation-delay: 1.1s; }
-.guide-label:nth-child(8) { animation-delay: 1.25s; }
+.guide-label:nth-child(1) { animation-delay: 0.1s; }
+.guide-label:nth-child(2) { animation-delay: 0.2s; }
+.guide-label:nth-child(3) { animation-delay: 0.3s; }
+.guide-label:nth-child(4) { animation-delay: 0.4s; }
+.guide-label:nth-child(5) { animation-delay: 0.5s; }
+.guide-label:nth-child(6) { animation-delay: 0.6s; }
+.guide-label:nth-child(7) { animation-delay: 0.7s; }
+.guide-label:nth-child(8) { animation-delay: 0.8s; }
 
 @keyframes guide-label-in {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .guide-text {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   color: var(--alu-700);
-  letter-spacing: 0.2px;
+  letter-spacing: 0.15px;
   white-space: nowrap;
   font-family: var(--font-sans);
 }
 
 .guide-text-subtle {
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 400;
   color: var(--alu-600);
-  letter-spacing: 0.2px;
+  letter-spacing: 0.15px;
   font-family: var(--font-sans);
 }
 
-.guide-arrow {
-  color: var(--alu-500);
-  flex-shrink: 0;
+/* Simple line connectors */
+.guide-line {
+  display: block;
+  background: var(--alu-500);
+  border-radius: 1px;
 }
 
-/* Positions — anchored to the device */
-.guide-oled { top: 20px; right: -120px; }
-.guide-reel { top: 100px; left: 50%; transform: translateX(-50%); flex-direction: column; align-items: center; }
-.guide-rocker { top: 45%; left: -130px; }
-.guide-transport { bottom: 10px; left: 50%; transform: translateX(-50%); flex-direction: column; align-items: center; }
-.guide-dial { bottom: 60px; right: -100px; }
-.guide-mbtn { top: 30px; right: -90px; }
-.guide-fx { top: 80px; right: -95px; }
-.guide-keyboard { bottom: -30px; left: 50%; transform: translateX(-50%); }
+.guide-line-h {
+  width: 28px;
+  height: 1px;
+}
 
+.guide-line-v {
+  width: 1px;
+  height: 20px;
+}
+
+/* === Label Positions === */
+/* Left: FF/Rewind */
+.guide-rocker {
+  left: -130px;
+  top: 38%;
+}
+
+/* Right: Display */
+.guide-oled {
+  right: -120px;
+  top: 5%;
+}
+
+/* Right: Mode (M button) */
+.guide-mbtn {
+  right: -100px;
+  top: 16%;
+}
+
+/* Right: Tape FX */
+.guide-fx {
+  right: -110px;
+  top: 23%;
+}
+
+/* Right: Volume (dial) */
+.guide-vol {
+  right: -110px;
+  top: 74%;
+}
+
+/* Center: Reel */
+.guide-reel {
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Bottom: Transport */
+.guide-transport {
+  left: 50%;
+  top: 88%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Keyboard */
+.guide-keyboard {
+  left: 50%;
+  top: 93%;
+  transform: translateX(-50%);
+}
+
+/* Dismiss */
 .guide-dismiss {
   position: absolute;
-  bottom: -55px;
+  top: 97%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 11px;
@@ -861,15 +925,16 @@ body {
   letter-spacing: 0.3px;
   font-family: var(--font-sans);
   animation: guide-pulse 2s ease-in-out infinite;
+  animation-delay: 1s;
 }
 
 @keyframes guide-pulse {
-  0%, 100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 
 /* Dark mode */
-.dark-mode .guide-text { color: #888; }
+.dark-mode .guide-text { color: #999; }
 .dark-mode .guide-text-subtle { color: #666; }
-.dark-mode .guide-arrow { color: #555; }
+.dark-mode .guide-line { background: #555; }
 .dark-mode .guide-dismiss { color: #666; }

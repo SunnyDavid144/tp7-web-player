@@ -14,7 +14,7 @@ export function TP7Player() {
   const reelRef = useRef<SVGSVGElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = useState(false);
-  const [showGuide, setShowGuide] = useState(true);
+  const showGuide = false; // Hidden for now — revisit with JS-based positioning
 
   // Auto-load demo track on first mount
   const demoLoadedRef = useRef(false);
@@ -58,10 +58,8 @@ export function TP7Player() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   }, [motor]);
 
-  const dismissGuide = useCallback(() => { setShowGuide(false); }, []);
-
   return (
-    <div className={`tp7-wrapper ${motor.state.darkMode ? 'dark-mode' : ''}`} onClick={showGuide ? dismissGuide : undefined}>
+    <div className={`tp7-wrapper ${motor.state.darkMode ? 'dark-mode' : ''}`}>
       <div className="tp7-device-wrap">
         <FeatureGuide visible={showGuide} />
         <div className="tp7-device">
