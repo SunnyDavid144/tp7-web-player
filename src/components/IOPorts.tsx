@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 interface IOPortsProps {
   volume: number;
@@ -17,20 +17,29 @@ interface IOPortsProps {
 export function IOPorts({ volume, isLoaded, tapeEffects, darkMode, onVolumeUp, onVolumeDown, onSetVolume, onCycleDisplayMode, onToggleDarkMode, onToggleTapeEffects, onExport }: IOPortsProps) {
   const dragStartY = useRef<number | null>(null);
   const dragStartVol = useRef<number>(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleDialPointerDown = useCallback((e: React.PointerEvent) => {
     if (!isLoaded) return;
-    dragStartY.current = e.clientY; dragStartVol.current = volume;
+    dragStartY.current = e.clientY;
+    dragStartVol.current = volume;
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    setIsDragging(true);
   }, [volume, isLoaded]);
 
   const handleDialPointerMove = useCallback((e: React.PointerEvent) => {
     if (dragStartY.current === null) return;
-    const delta = (dragStartY.current - e.clientY) / 100;
+    const delta = (dragStartY.current - e.clientY) / 80;
     onSetVolume(Math.max(0, Math.min(1, dragStartVol.current + delta)));
   }, [onSetVolume]);
 
-  const handleDialPointerUp = useCallback(() => { dragStartY.current = null; }, []);
+  const handleDialPointerUp = useCallback(() => {
+    dragStartY.current = null;
+    setIsDragging(false);
+  }, []);
+
+  // Map volume (0-1) to rotation (0-270 degrees)
+  const dialRotation = volume * 270;
 
   return (
     <div className="io-ports">
@@ -50,8 +59,25 @@ export function IOPorts({ volume, isLoaded, tapeEffects, darkMode, onVolumeUp, o
       <button className="side-btn" onClick={onExport} disabled={!isLoaded} aria-label="Export WAV" title="Export WAV (E)">
         <span style={{ fontSize: '7px' }}>↓</span>
       </button>
-      <div className="knurled-dial interactive" onPointerDown={handleDialPointerDown} onPointerMove={handleDialPointerMove} onPointerUp={handleDialPointerUp} onPointerCancel={handleDialPointerUp} title={`Vol: ${Math.round(volume*100)}%`} style={{ touchAction: 'none' }}>
-        <div className="dial-knurl"><div className="dial-level" style={{ height: `${volume*100}%` }} /></div>
+
+      {/* Rotary knob */}
+      <div
+        className={`volume-knob ${isLoaded ? 'interactive' : ''} ${isDragging ? 'dragging' : ''}`}
+        onPointerDown={handleDialPointerDown}
+        onPointerMove={handleDialPointerMove}
+        onPointerUp={handleDialPointerUp}
+        onPointerCancel={handleDialPointerUp}
+        title={`Vol: ${Math.round(volume * 100)}%`}
+        style={{ touchAction: 'none' }}
+      >
+        <div className="knob-body" style={{ transform: `rotate(${dialRotation}deg)` }}>
+          {/* Knurling lines */}
+          {Array.from({ length: 24 }).map((_, i) => (
+            <div key={i} className="knob-notch" style={{ transform: `rotate(${i * 15}deg)` }} />
+          ))}
+          {/* Position indicator */}
+          <div className="knob-indicator" />
+        </div>
       </div>
     </div>
   );

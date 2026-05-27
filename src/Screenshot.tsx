@@ -30,6 +30,7 @@ export function Screenshot() {
               isRockerHeld={false} isTapeStopped={false}
               isRecording={false} recordingTime={0}
               displayMode="time" volume={0.8} isLooping={false} tapeEffects={false}
+              booted={true}
             />
           </div>
 

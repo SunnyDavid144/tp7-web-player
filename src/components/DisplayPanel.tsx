@@ -2,7 +2,7 @@ interface DisplayPanelProps {
   currentTime: number; duration: number; playbackRate: number; fileName: string | null;
   isLoaded: boolean; error: string | null; isRockerHeld: boolean; isTapeStopped: boolean;
   isRecording: boolean; recordingTime: number; displayMode: 'time' | 'remaining' | 'percent';
-  volume: number; isLooping: boolean; tapeEffects: boolean;
+  volume: number; isLooping: boolean; tapeEffects: boolean; booted: boolean;
 }
 
 function formatTime(seconds: number): string {
@@ -12,7 +12,7 @@ function formatTime(seconds: number): string {
   return `${sign}${mins}.${secs.toString().padStart(2,'0')}.${ms.toString().padStart(2,'0')}`;
 }
 
-export function DisplayPanel({ currentTime, duration, playbackRate, fileName, isLoaded, error, isRockerHeld, isTapeStopped, isRecording, recordingTime, displayMode, volume, isLooping, tapeEffects }: DisplayPanelProps) {
+export function DisplayPanel({ currentTime, duration, playbackRate, fileName, isLoaded, error, isRockerHeld, isTapeStopped, isRecording, recordingTime, displayMode, volume, isLooping, tapeEffects, booted }: DisplayPanelProps) {
   let timeDisplay = '0.00.00';
   if (isLoaded) {
     if (displayMode === 'remaining') timeDisplay = formatTime(-(duration - currentTime));
@@ -23,7 +23,15 @@ export function DisplayPanel({ currentTime, duration, playbackRate, fileName, is
   return (
     <div className="display-panel">
       <div className={`oled-screen ${isRecording ? 'oled-recording' : ''}`}>
-        {error ? <div className="oled-error">{error}</div> : isRecording ? (
+        {!booted ? (
+          /* Boot sequence */
+          <div className="oled-boot">
+            <div className="oled-boot-logo">TE</div>
+            <div className="oled-boot-bar"><div className="oled-boot-fill" /></div>
+          </div>
+        ) : error ? (
+          <div className="oled-error">{error}</div>
+        ) : isRecording ? (
           <><div className="oled-title oled-rec-title"><span className="rec-indicator">●</span> REC</div>
           <div className="oled-bottom"><span className="oled-time oled-rec-time">{formatTime(recordingTime)}</span></div></>
         ) : (
